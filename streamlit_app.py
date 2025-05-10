@@ -8,7 +8,7 @@ from sklearn.multioutput import MultiOutputRegressor
 from sklearn.ensemble import RandomForestRegressor
 
 @st.cache_data
-def simulate_data(num_records=300):
+def simulate_data(num_records=300):  # Default to 300 records
     data = []
     start_date = pd.to_datetime("2023-01-01")
     for i in range(num_records):
@@ -45,12 +45,12 @@ def generate_unique_prediction(predicted_array, main_range=(1, 69), count=5):
         unique_numbers.add(random.randint(main_range[0], main_range[1]))
     return np.sort(list(unique_numbers))
 
-# Streamlit App Interface
+# --- Streamlit App Interface ---
 st.title("🎰 Powerball Predictor App")
 st.markdown("This app predicts the next possible Powerball numbers based on historical trends. *(Just for fun!)*")
 
-data_size = st.slider("Select Historical Data Size", 100, 1000, 300, 50)
-df = simulate_data(data_size)
+# Always simulate 300 records
+df = simulate_data()
 df = engineer_features(df)
 
 features = ["Total_Sum", "High_Num_Count", "Low_Num_Count", "Even_Count", "Odd_Count", "Range_Span", "Repeated_Numbers"]
